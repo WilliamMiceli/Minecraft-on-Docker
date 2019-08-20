@@ -1,0 +1,62 @@
+image: docker:latest
+
+stages:
+  - Build Base
+  - Build Variants
+  - Push Images
+
+0-build-base:
+  stage: Build Base
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - ./images/
+  tags:
+    - docker
+  before_script:
+    - mkdir ./images
+  script:
+    - docker build --pull --build-arg "MC_SERVER_VERSION=$MC_SERVER_VERSION" -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA" .
+    - docker save --output "./images/$CI_COMMIT_SHORT_SHA.tar" "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA"
+
+1A-push-dev:
+  stage: Push Images
+  dependencies:
+    - 0-build-base
+    - 1-build-git
+  tags:
+    - docker
+  before_script:
+    - docker load --input "./images/$CI_COMMIT_SHORT_SHA.tar"
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin
+  script:
+    - docker tag "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA" "$CI_REGISTRY_IMAGE:dev-$MC_SERVER_VERSION"
+    - docker push "$CI_REGISTRY_IMAGE:dev-$MC_SERVER_VERSION"
+
+1B-push-version:
+  stage: Push Images
+  dependencies:
+    - 0-build-base
+  tags:
+    - docker
+  when: manual
+  before_script:
+    - docker load --input "./images/$CI_COMMIT_SHORT_SHA.tar"
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin
+  script:
+    - docker tag "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA" "$CI_REGISTRY_IMAGE:$MC_SERVER_VERSION"
+    - docker push "$CI_REGISTRY_IMAGE:$MC_SERVER_VERSION"
+
+1C-push-latest:
+  stage: Push Images
+  dependencies:
+    - 0-build-base
+  tags:
+    - docker
+  when: manual
+  before_script:
+    - docker load --input "./images/$CI_COMMIT_SHORT_SHA.tar"
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin
+  script:
+    - docker tag "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA" "$CI_REGISTRY_IMAGE:latest"
+    - docker push "$CI_REGISTRY_IMAGE:latest"
