@@ -10,5 +10,5 @@ RUN apt-get update && apt-get install -y curl \
 
 COPY /entrypoint.sh /
 
-EXPOSE 80
+EXPOSE 25565
 CMD ["/bin/sh", "/entrypoint.sh"]
