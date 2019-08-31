@@ -6,8 +6,7 @@ ARG MC_SERVER_VERSION
 
 RUN apt update && apt install -y curl \
     && curl -o /MinecraftServer.zip https://minecraft.azureedge.net/bin-linux/bedrock-server-${MC_SERVER_VERSION}.zip \
-    && apt purge curl \
-    && rm /var/lib/apt/lists/*
+    && apt purge -y curl && apt autoremove && rm /var/lib/apt/lists/*
 
 COPY /entrypoint.sh /
 
