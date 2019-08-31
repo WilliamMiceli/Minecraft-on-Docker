@@ -23,7 +23,6 @@ stages:
   stage: Push Images
   dependencies:
     - 0-build-base
-    - 1-build-git
   tags:
     - docker
   before_script:
