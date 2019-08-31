@@ -4,9 +4,7 @@ USER root
 
 ARG MC_SERVER_VERSION
 
-# Download and setup Minecraft Server archive
-#Located at https://minecraft.azureedge.net/bin-linux/bedrock-server-${MC_SERVER_VERSION}.zip
-
+RUN curl -o /MinecraftServer.zip https://minecraft.azureedge.net/bin-linux/bedrock-server-${MC_SERVER_VERSION}.zip
 
 COPY /entrypoint.sh /
 
