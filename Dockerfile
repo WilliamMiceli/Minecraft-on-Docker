@@ -11,4 +11,5 @@ RUN apt-get update && apt-get install -y curl \
 COPY /entrypoint.sh /
 
 EXPOSE 25565
-CMD ["/bin/sh", "/entrypoint.sh"]
+CMD ["/bin/bash"]
+# CMD ["/bin/sh", "/entrypoint.sh"] Temporary
