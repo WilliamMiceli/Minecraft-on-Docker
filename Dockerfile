@@ -12,6 +12,6 @@ RUN apt-get update && apt-get install -y curl unzip libcurl4 screen \
 
 COPY /entrypoint.sh /
 
-EXPOSE 19132 # New Minecraft Default Port
-EXPOSE 25565 # Old Minecraft Default Port
+EXPOSE 19132
+EXPOSE 25565
 CMD ["/bin/sh", "screen /entrypoint.sh"]
