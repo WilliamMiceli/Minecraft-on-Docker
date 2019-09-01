@@ -1,5 +1,4 @@
 #!/bin/sh
 
-# Command to run: `LD_LIBRARY_PATH=. ./bedrock_server`
-
-/bin/sh
+unzip /MinecraftServer.zip -d /MinecraftServer
+LD_LIBRARY_PATH=./MinecraftServer /MinecraftServer/bedrock_server
