@@ -14,4 +14,5 @@ COPY /entrypoint.sh /
 
 EXPOSE 19132
 EXPOSE 25565
-CMD ["/bin/sh", "/entrypoint.sh"]
+# CMD ["/bin/sh", "/entrypoint.sh"]
+CMD ["/bin/sh"]
