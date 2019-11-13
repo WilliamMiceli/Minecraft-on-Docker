@@ -29,8 +29,8 @@ stages:
     - docker load --input "./images/$CI_COMMIT_SHORT_SHA.tar"
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin
   script:
-    - docker tag "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA" "$CI_REGISTRY_IMAGE:dev-$MC_SERVER_VERSION"
-    - docker push "$CI_REGISTRY_IMAGE:dev-$MC_SERVER_VERSION"
+    - docker tag "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA" "$CI_REGISTRY_IMAGE:dev-$MC_SERVER_VERSION-$CI_PIPELINE_ID"
+    - docker push "$CI_REGISTRY_IMAGE:dev-$MC_SERVER_VERSION-$CI_PIPELINE_ID"
 
 1B-push-version:
   stage: Push Images
