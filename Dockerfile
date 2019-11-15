@@ -10,11 +10,10 @@ RUN apt-get update && apt-get install -y curl unzip libcurl4 screen \
     && apt-get purge -y curl && apt-get autoremove -y && rm -rf /var/lib/apt/lists/* \
     && sed -i 's/#startup_message off/startup_message off/g' /etc/screenrc
 
-COPY /usr/var/* /usr/var/
+COPY /usr/bin/ /usr/bin/
 COPY /entrypoint.sh /
 
 RUN chmod +x /usr/var/StartServer
 
-EXPOSE 19132
-EXPOSE 25565
+EXPOSE 19132 19132/udp
 CMD ["/bin/bash", "/entrypoint.sh"]
