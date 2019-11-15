@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cd /MinecraftServer
+LD_LIBRARY_PATH=. ./bedrock_server
