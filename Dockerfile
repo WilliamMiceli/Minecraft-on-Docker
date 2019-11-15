@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y curl unzip libcurl4 screen \
 COPY /usr/bin/ /usr/bin/
 COPY /entrypoint.sh /
 
-RUN chmod +x /usr/var/StartServer
+RUN chmod +x /usr/bin/StartServer
 
 EXPOSE 19132 19132/udp
 CMD ["/bin/bash", "/entrypoint.sh"]
